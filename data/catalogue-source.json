@@ -1,0 +1,14 @@
+{
+  "source": "FINESS — catégorie 620 : pharmacie d’officine",
+  "sourceDate": "2026-05-04",
+  "compiledDate": "2026-10-05",
+  "total": 20003,
+  "initialParis": 847,
+  "sourcePharmacies": 20003,
+  "missingCoordinates": [],
+  "missingPhones": 2437,
+  "approximatePositions": 3548,
+  "license": "Licence Ouverte / Open Licence 2.0",
+  "sourceUrl": "https://www.data.gouv.fr/datasets/finess-extraction-du-fichier-des-etablissements"
+}
+

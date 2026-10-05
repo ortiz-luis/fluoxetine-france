@@ -1,0 +1,107 @@
+[
+  {
+    "id": "initial-750024101",
+    "pharmacyId": "750024101",
+    "status": "plenty",
+    "date": "2026-10-05",
+    "reportedAt": "2026-10-05T10:00:40.685Z",
+    "source": "initial-phone-survey"
+  },
+  {
+    "id": "initial-750024002",
+    "pharmacyId": "750024002",
+    "status": "plenty",
+    "date": "2026-10-05",
+    "reportedAt": "2026-10-05T10:02:03.066Z",
+    "source": "initial-phone-survey"
+  },
+  {
+    "id": "initial-750010563",
+    "pharmacyId": "750010563",
+    "status": "plenty",
+    "date": "2026-10-05",
+    "reportedAt": "2026-10-05T10:05:52.035Z",
+    "source": "initial-phone-survey"
+  },
+  {
+    "id": "initial-750011884",
+    "pharmacyId": "750011884",
+    "status": "plenty",
+    "date": "2026-10-05",
+    "reportedAt": "2026-10-05T10:07:08.848Z",
+    "source": "initial-phone-survey"
+  },
+  {
+    "id": "initial-750011843",
+    "pharmacyId": "750011843",
+    "status": "plenty",
+    "date": "2026-10-05",
+    "reportedAt": "2026-10-05T10:10:32.952Z",
+    "source": "initial-phone-survey"
+  },
+  {
+    "id": "initial-750010522",
+    "pharmacyId": "750010522",
+    "status": "plenty",
+    "date": "2026-10-05",
+    "reportedAt": "2026-10-05T10:18:13.464Z",
+    "source": "initial-phone-survey"
+  },
+  {
+    "id": "initial-750009276",
+    "pharmacyId": "750009276",
+    "status": "plenty",
+    "date": "2026-10-05",
+    "reportedAt": "2026-10-05T10:20:03.150Z",
+    "source": "initial-phone-survey"
+  },
+  {
+    "id": "initial-750013096",
+    "pharmacyId": "750013096",
+    "status": "plenty",
+    "date": "2026-10-05",
+    "reportedAt": "2026-10-05T10:30:55.405Z",
+    "source": "initial-phone-survey"
+  },
+  {
+    "id": "initial-750010084",
+    "pharmacyId": "750010084",
+    "status": "plenty",
+    "date": "2026-10-05",
+    "reportedAt": "2026-10-05T10:31:41.504Z",
+    "source": "initial-phone-survey"
+  },
+  {
+    "id": "initial-750008815",
+    "pharmacyId": "750008815",
+    "status": "plenty",
+    "date": "2026-10-05",
+    "reportedAt": "2026-10-05T10:36:57.418Z",
+    "source": "initial-phone-survey"
+  },
+  {
+    "id": "initial-750011801",
+    "pharmacyId": "750011801",
+    "status": "plenty",
+    "date": "2026-10-05",
+    "reportedAt": "2026-10-05T10:37:38.287Z",
+    "source": "initial-phone-survey"
+  },
+  {
+    "id": "initial-750024622",
+    "pharmacyId": "750024622",
+    "status": "plenty",
+    "date": "2026-10-05",
+    "reportedAt": "2026-10-05T10:44:21.184Z",
+    "source": "initial-phone-survey"
+  },
+  {
+    "id": "initial-750024804",
+    "pharmacyId": "750024804",
+    "status": "plenty",
+    "date": "2026-10-05",
+    "reportedAt": "2026-10-05T10:47:01.573Z",
+    "source": "initial-phone-survey"
+  }
+]
+
