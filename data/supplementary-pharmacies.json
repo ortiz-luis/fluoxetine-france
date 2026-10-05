@@ -1,0 +1,28 @@
+[
+  {
+    "id": "920007911",
+    "name": "Pharmacie du Cinéma",
+    "address": "8 avenue de la Division Leclerc, 92160 Antony",
+    "postcode": "92160",
+    "city": "Antony",
+    "phone": "01 46 66 01 46",
+    "lat": 48.753121,
+    "lng": 2.30481,
+    "source": "FINESS et site officiel de la pharmacie",
+    "sourceUrl": "https://www.pharmacieducinema92.fr/fr/contact",
+    "approximate": false
+  },
+  {
+    "id": "920007846",
+    "name": "Pharmacie du Marché",
+    "address": "26 rue Auguste Mounié, 92160 Antony",
+    "postcode": "92160",
+    "city": "Antony",
+    "phone": "01 46 66 01 43",
+    "lat": 48.753895,
+    "lng": 2.303045,
+    "source": "FINESS et site officiel de la pharmacie",
+    "sourceUrl": "https://pharmaciedumarcheantony.wellandwell.fr/",
+    "approximate": false
+  }
+]

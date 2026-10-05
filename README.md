@@ -18,6 +18,7 @@ Les points signifient :
 
 - vert soutenu : oui, en quantité ;
 - vert clair : oui, mais peu ;
+- vert intermédiaire : disponible, quantité non précisée (signalement transmis sans indication de quantité) ;
 - rose pâle : non disponible ;
 - gris clair : pas encore appelée sur cette carte.
 
@@ -37,6 +38,8 @@ La première version reprend les **847 pharmacies parisiennes** de la liste de t
 
 Le répertoire initial est un point de départ collaboratif : coordonnées, ouvertures et stocks doivent être reconfirmés par téléphone.
 
+Les deux disponibilités transmises à Antony le 5 octobre 2026 figurent comme « Disponible · quantité non précisée » ; elles ne sont pas présentées comme des stocks abondants. L’élargissement national attend la vérification du nouveau flux FINESS quotidien ; l’ancien extrait gelé du 4 mai 2026 n’est plus chargé par la carte.
+
 ## Projet
 
 Le dépôt public est hébergé sur GitHub Pages. Les réponses sont des issues GitHub publiques, validées par la page avant affichage. GitHub fournit automatiquement l’horodatage de publication.
@@ -45,4 +48,3 @@ Le dépôt public est hébergé sur GitHub Pages. Les réponses sont des issues 
 - [Répertoire parisien initial](https://pharmaciesdefrance.org/departement/75-paris)
 - [OpenStreetMap](https://www.openstreetmap.org/copyright) pour le fond de carte
 - [Leaflet 1.9.4](https://leafletjs.com), inclus localement
-

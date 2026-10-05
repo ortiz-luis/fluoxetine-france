@@ -10,4 +10,4 @@
 @media(max-width:480px){.tabs{grid-template-columns:1.4fr .8fr 1fr}.tabs button{font-size:.7rem}.legend{display:grid;grid-template-columns:auto auto;gap:5px 10px;max-width:none;font-size:.65rem}.map-top{flex-wrap:wrap}.legend>span{margin:0}.activation-note{font-size:.77rem}.map-controls{margin-left:auto}.answer strong{font-size:.98rem}.answer small{font-size:.8rem}}
 
 .automatic-time{padding:12px 14px;background:#edf3e8;border-radius:10px;font-size:.86rem;color:var(--muted)}.history{margin-top:10px;font-size:.78rem;color:var(--muted)}.history summary{cursor:pointer;color:var(--green);font-weight:650}.history div{padding:4px 0}
-
+.available-dot{background:#75b396;border:1px solid #39765c}.list-card.available{background:#eff7f2;border-color:#bfdbc9}.list-card.available .list-status:before{background:#75b396}.confirmation.available{background:#e8f3ec}

@@ -1,7 +1,7 @@
 (function(root) {
  'use strict';
- const STATUSES=['plenty','limited','none'];
- const LABELS={plenty:'Oui, en quantité',limited:'Oui, mais peu',none:'Non disponible',unknown:'Pas encore appelée'};
+ const STATUSES=['plenty','limited','none','available'];
+ const LABELS={plenty:'Oui, en quantité',limited:'Oui, mais peu',none:'Non disponible',available:'Disponible · quantité non précisée',unknown:'Pas encore appelée'};
  function parisDate(now=new Date()) {
   const parts=new Intl.DateTimeFormat('fr-FR',{timeZone:'Europe/Paris',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(now);
   const get=type=>parts.find(p=>p.type===type).value;
@@ -26,7 +26,9 @@
   if(!issue||issue.state!=='open'||issue.pull_request||typeof issue.body!=='string')return null;
   const match=issue.body.match(/<!-- fluoxetine-report:v2 -->\s*```json\s*([\s\S]*?)\s*```/);
   if(!match)return null; let value; try{value=JSON.parse(match[1]);}catch{return null;}
-  return parseReport({id:'github-'+issue.number,pharmacyId:value.pharmacyId,status:value.status,date:value.date,created_at:issue.created_at,source:'community'},catalog,now);
+  if(value.schema!==2||!Number.isFinite(Date.parse(issue.created_at)))return null;
+  const published=new Date(issue.created_at);
+  return parseReport({id:'github-'+issue.number,pharmacyId:value.pharmacyId,status:value.status,date:parisDate(published),created_at:issue.created_at,source:'community',participantId:issue.user?.login||null},catalog,now);
  }
  function latestReports(reports){const out=new Map();for(const r of reports){const old=out.get(r.pharmacyId);if(!old||r.date>old.date||(r.date===old.date&&r.reportedAt>old.reportedAt))out.set(r.pharmacyId,r);}return out;}
  function validPharmacy(p){return Boolean(p&&typeof p.id==='string'&&p.id.length<=80&&typeof p.name==='string'&&p.name.trim().length>=2&&p.name.length<=160&&typeof p.address==='string'&&p.address.length>=8&&p.address.length<=250&&/^\d{5}$/.test(p.postcode)&&typeof p.city==='string'&&p.city.length>=2&&p.city.length<=100&&Number.isFinite(p.lat)&&Number.isFinite(p.lng)&&Math.abs(p.lat)<=90&&Math.abs(p.lng)<=180&&(p.phone===''||phone(p.phone)));}
@@ -34,4 +36,3 @@
  const api={STATUSES,LABELS,parisDate,validDate,normalize,escape,phone,displayPhone,parseReport,parseGithubIssue,latestReports,validPharmacy,fromRow};
  if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.PharmacyCore=api;
 })(typeof window!=='undefined'?window:globalThis);
-
