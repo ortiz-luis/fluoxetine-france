@@ -16,6 +16,7 @@
   const body=`## Réponse téléphonique\n\nPharmacie : ${pharmacy.name}\nAdresse : ${pharmacy.address}\n\n<!-- fluoxetine-report:v2 -->\n\`\`\`json\n${JSON.stringify(payload,null,2)}\n\`\`\`\n`;
   const u=new URL(`https://github.com/${REPOSITORY}/issues/new`);u.search=new URLSearchParams({template:'report.md',title:`[${status}] ${pharmacy.name} · ${date}`,body}).toString();return u.toString();
  }
- root.PharmacyCommunity={enabled:true,loadReports,issueUrl,repository:REPOSITORY};
+ function candidateUrl(p){const body=`## Pharmacie proposée\n\nNom : ${p.name}\nAdresse : ${p.address}\nTéléphone : ${p.phone}\nCoordonnées : ${p.lat}, ${p.lng}\n\nMerci de vérifier cette pharmacie avant de publier.\n`;const u=new URL(`https://github.com/${REPOSITORY}/issues/new`);u.search=new URLSearchParams({template:'candidate.md',title:`[Pharmacie à vérifier] ${p.name}`,body}).toString();return u.toString();}
+ root.PharmacyCommunity={enabled:true,loadReports,issueUrl,candidateUrl,repository:REPOSITORY};
 })(window);
 
