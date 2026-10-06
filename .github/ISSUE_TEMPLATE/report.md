@@ -1,6 +1,6 @@
 ---
-name: Confirmation d'appel
-about: Signaler la réponse d'une pharmacie après un appel
+name: Signaler une disponibilité
+about: Partager une information obtenue par téléphone ou sur place
 title: "[Confirmation] "
 labels: "confirmation"
 ---
@@ -15,7 +15,6 @@ La date et l'heure enregistrées sont celles de la publication de cette issue, a
   "schema": 2,
   "pharmacyId": "",
   "status": "plenty",
-  "date": ""
+  "method": "other"
 }
 ```
-

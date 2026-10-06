@@ -1,50 +1,78 @@
-# Fluoxétine France — réseau solidaire
+# Fluoxétine — une carte pour s’entraider
 
-Une carte publique, en français, pour partager les réponses de pharmacies contactées par téléphone. Le site est volontairement simple : appeler, choisir une réponse, puis publier la confirmation sur GitHub.
+[Ouvrir la carte publique](https://ortiz-luis.github.io/fluoxetine-france/).
 
-## Comment l’utiliser
+Une carte en français pour partager la disponibilité de la fluoxétine, après un appel ou une visite en pharmacie. La consultation est libre. Un compte GitHub gratuit suffit pour contribuer.
 
-1. Rechercher une ville, un code postal, une pharmacie ou une adresse.
-2. Ouvrir la fiche et appeler la pharmacie.
-3. Cliquer sur **Partager la réponse**.
-4. Choisir l’une des trois réponses : **oui, en quantité**, **oui, mais peu**, ou **non disponible**.
-5. Continuer sur GitHub et cliquer sur **Submit new issue**.
+## Trouver et renseigner une pharmacie
 
-La date et l’heure ne sont jamais saisies à la main. La page prépare la confirmation au moment de l’envoi et GitHub enregistre automatiquement la date et l’heure exactes de publication ; elles sont affichées selon l’heure de Paris.
+Trois parcours conduisent aux mêmes fiches, déjà préparées :
 
-Une même pharmacie peut recevoir plusieurs confirmations. Elles restent indépendantes et sont comptées dans la fiche. Plusieurs personnes qui appellent à des moments différents donnent ainsi un signal plus fiable qu’une seule réponse. La dernière confirmation reste la réponse principale affichée ; l’historique des autres confirmations reste consultable.
+- **Sur la carte** : zoomer près de chez soi, ou utiliser **Autour de moi**, puis toucher un point. Les groupes gris se séparent en zoomant.
+- **Par code postal** : saisir les cinq chiffres sous la carte et choisir **Voir la zone**, puis toucher une pharmacie.
+- **Dans la liste** : rechercher quelques mots du nom, la commune, le code postal ou l’adresse. La liste **Cette zone** suit la carte ; **Toutes** permet une recherche nationale. Seules quelques dizaines de fiches sont créées à la fois.
 
-Les points signifient :
+La fiche montre l’adresse, le téléphone quand il est disponible, la dernière disponibilité et son historique. Choisir **Oui, en quantité**, **Oui, mais peu** ou **Non disponible** ouvre un signalement GitHub entièrement prérempli. Il reste à confirmer sa publication avec **Create** ou **Submit new issue**. Aucun nom de pharmacie, adresse ou horodatage n’est à recopier.
 
-- vert soutenu : oui, en quantité ;
-- vert clair : oui, mais peu ;
-- vert intermédiaire : disponible, quantité non précisée (signalement transmis sans indication de quantité) ;
-- rose pâle : non disponible ;
-- gris clair : pas encore appelée sur cette carte.
+L’origine de l’information peut être précisée, de façon facultative : **Par téléphone** ou **Sur place**. Sans réponse de la pharmacie, ne pas déclarer une indisponibilité.
 
-Un point gris ne signifie pas « pas de stock ». Sans réponse au téléphone, ne pas choisir « non disponible ».
+Le site lit les contributions publiques GitHub et se réactualise. Le bouton **Actualiser** permet aussi de les relire après publication. L’envoi ouvre une page GitHub : choisir un bouton sur la carte ne suffit pas encore à publier le signalement. Les limitations de l’API GitHub peuvent temporairement interrompre l’actualisation ; les derniers signalements chargés restent visibles.
 
-## Contributions et modération
+## Horodatage, participants et historique
 
-La consultation est libre. Pour contribuer, il faut un compte GitHub gratuit : cela réduit les trolls et permet de fermer ou marquer comme invalide une confirmation douteuse. Le contributeur n’accède ni au code ni aux autres données du dépôt ; il envoie seulement une fiche publique préremplie.
+La date et l’heure affichées viennent de `created_at`, fourni par GitHub lors de la publication. Elles sont affichées selon l’heure de Paris. Une éventuelle date ajoutée à la main au contenu du signalement est ignorée. Publier immédiatement après l’appel ou la visite : l’heure enregistrée est celle de la publication, pas une heure de contact que le système pourrait deviner.
 
-Les seules informations demandées sont la pharmacie, la réponse et la date/heure automatiques de publication. Aucun nom de patient, ordonnance, traitement personnel ou commentaire libre n’est publié. Le stock peut changer : toujours rappeler la pharmacie avant de se déplacer et confirmer le dosage et la présentation.
+L’identifiant public GitHub de l’auteur est affiché. Plusieurs participants peuvent renseigner la même pharmacie. Le dernier signalement est principal, les précédents restent consultables. Les nombres de **signalements** et de **comptes participants distincts** sont séparés ; trois publications d’une personne ne deviennent pas trois personnes indépendantes.
 
-Une pharmacie absente peut être proposée avec le bouton **Ajouter une pharmacie**. Elle doit être une pharmacie d’officine, pas une parapharmacie. Cette fonction est prévue pour l’élargissement progressif du répertoire à d’autres communes et régions.
+Après **48 heures**, une information passe à **À reconfirmer**, avec un point beige, et quitte le décompte des disponibilités récentes. Elle reste dans l’historique. Ce délai est une règle d’affichage, pas une garantie de stock pendant 48 heures.
 
-## Données initiales
+Les couleurs : vert soutenu = en quantité ; vert clair = peu de stock ; vert intermédiaire = disponible sans indication de quantité ; rose pâle = indisponible ; gris = aucune information partagée ; beige = à reconfirmer. Un point gris ne signifie jamais « indisponible ».
 
-La première version reprend les **847 pharmacies parisiennes** de la liste de travail initiale et les **13 réponses finales favorables du 5 octobre 2026**. Le nombre de boîtes, le dosage et la présentation n’ont pas été consignés ; la carte ne les invente pas. Les autres réponses du journal privé ne sont pas publiées.
+## Répertoire national et précision
 
-Le répertoire initial est un point de départ collaboratif : coordonnées, ouvertures et stocks doivent être reconfirmés par téléphone.
+L’extrait **FINESS — Structures du 5 octobre 2026** comprend **19 916 entités géographiques d’exercice de catégorie 620, classées actives (`etatObjet = A`)**. La page conserve aussi les **847 fiches parisiennes initiales**, en les rapprochant par leur identifiant FINESS ; une fiche initiale absente de l’extrait actif reste accessible avec un avertissement. Les deux fiches d’Antony sont conservées. Le total initial fusionné est **19 917 fiches**, sans dupliquer les pharmacies déjà présentes.
 
-Les deux disponibilités transmises à Antony le 5 octobre 2026 figurent comme « Disponible · quantité non précisée » ; elles ne sont pas présentées comme des stocks abondants. L’élargissement national attend la vérification du nouveau flux FINESS quotidien ; l’ancien extrait gelé du 4 mai 2026 n’est plus chargé par la carte.
+FINESS n’est pas une vérification sur place. Quatorze fiches actives portent aussi une date de fermeture : cet état contradictoire est indiqué. Le répertoire exclut les parapharmacies et n’affirme pas connaître les horaires actuels de chaque pharmacie.
 
-## Projet
+Les champs GPS sont validés numériquement et selon leur région : les noms de colonnes FINESS ne sont pas toujours cohérents. Les adresses sans point sont complétées lorsque la BAN / IGN fournit un résultat suffisamment fiable dans la même commune ou le même code postal. Les résultats au niveau de la rue sont indiqués comme approximatifs ; un centre de commune n’est pas utilisé comme une position précise de pharmacie.
 
-Le dépôt public est hébergé sur GitHub Pages. Les réponses sont des issues GitHub publiques, validées par la page avant affichage. GitHub fournit automatiquement l’horodatage de publication.
+Pour certaines positions encore absentes, une coordonnée de l’ancien extrait FINESS du 4 mai 2026 est conservée seulement après rapprochement du même identifiant et de la même adresse. Ces positions sont explicitement signalées comme historiques, à vérifier. L’ancien fichier ne fournit pas la liste des établissements actifs du nouveau répertoire.
 
-- [FINESS — extraction officielle](https://www.data.gouv.fr/datasets/finess-extraction-du-fichier-des-etablissements)
-- [Répertoire parisien initial](https://pharmaciesdefrance.org/departement/75-paris)
-- [OpenStreetMap](https://www.openstreetmap.org/copyright) pour le fond de carte
-- [Leaflet 1.9.4](https://leafletjs.com), inclus localement
+Les fiches sans position restent dans la recherche et peuvent recevoir une disponibilité ; elles ne sont pas éliminées ni placées à une coordonnée inventée. Certains téléphones manquent également. Le pied du plan distingue le nombre de fiches et celui des points. Le téléphone des Deux Gares à Massy a été complété avec sa fiche Acceslibre ; les contacts d’Antony déjà vérifiés sont conservés.
+
+Les 13 disponibilités initiales et les deux signalements d’Antony restent liés à leurs identifiants. Aucun nouveau stock n’a été supposé pour Massy ou pour les nouvelles fiches nationales.
+
+## Modération et nouvelles fiches
+
+Les participants publient des signalements ; cette possibilité ne leur donne aucun droit de modification du code ou du répertoire officiel. Le responsable peut fermer un signalement ou lui ajouter un label `invalide`, `invalid`, `spam` ou `doublon` pour l’exclure de la carte.
+
+Si une pharmacie manque vraiment, le bouton **Une pharmacie manque ?** prépare une proposition distincte. Le responsable vérifie qu’il s’agit d’une officine, son adresse et son téléphone, puis ajoute le label **pharmacie-validée**. Le point apparaît alors sur la carte et peut être renseigné comme les autres. Les propositions sans ce label n’apparaissent pas. Fermer la proposition retire la fiche communautaire de l’affichage. Les anciens ajouts en texte libre doivent être vérifiés et incorporés au répertoire ou convertis au nouveau format.
+
+## Technologie et entretien
+
+Le site reste composé de fichiers statiques, hébergés sur GitHub Pages, sans compilation de la page. Le plan utilise **MapLibre GL JS 5.23.0**, distribué localement avec sa licence BSD, et le fond **Positron d’OpenFreeMap** avec ses attributions. Les points gris sont des couches GeoJSON regroupées ; les disponibilités sont une couche séparée qui reste visible à distance. Les symboles de pharmacies du fond ne remplacent pas les points du répertoire. Leaflet 1.9.4 n’est utilisé que pour vérifier le placement d’une nouvelle proposition.
+
+`scripts/build_directory.py` prépare `data/national.json` à partir de la dernière ressource FINESS **journalière**. Il conserve séparément les corrections sourcées et n’écrit pas l’extrait public si le traitement échoue ou si le nombre de fiches devient anormalement petit. Exécution :
+
+```sh
+python3 scripts/build_directory.py --geocode
+```
+
+Cette commande constitue l’outil d’entretien ; aucun serveur, abonnement ou service de base de données n’est nécessaire pour la version actuelle. Aucun nouveau traitement périodique n’est activé par cette modification.
+
+La géolocalisation sert à centrer la carte et n’est pas ajoutée aux signalements. La disponibilité, l’identifiant GitHub et la date de publication sont publics. Ne publier aucun document médical ni information concernant un patient.
+
+## Vérifications
+
+`tests/check-national.cjs` contrôle l’intégrité et la fusion du jeu réel, le point de Massy, le code postal de Strasbourg, la géolocalisation, les trois réponses préremplies, les dates automatiques, l’auteur et les comptes distincts, les contradictions successives, la persistance après rechargement et la limite de fiches HTML en tailles ordinateur et téléphone. Les contributions du test sont simulées : aucun signalement fictif n’est publié. Le test utilise Playwright et un navigateur Chromium, avec `TEST_CHROMIUM` pour fournir son exécutable.
+
+## Sources
+
+- [FINESS — Structures, flux quotidien et Licence Ouverte 2.0](https://www.data.gouv.fr/datasets/finess-structures-1)
+- [Géocodage BAN / IGN](https://geoservices.ign.fr/documentation/services/services-geoplateforme/geocodage)
+- [Acceslibre — Pharmacie des Deux Gares](https://acceslibre.beta.gouv.fr/app/91-massy/a/pharmacie/erp/pharmacie-des-deux-gares/)
+- [MapLibre GL JS et regroupement des points](https://maplibre.org/maplibre-gl-js/docs/examples/create-and-style-clusters/)
+- [OpenFreeMap](https://openfreemap.org/quick_start/), [OpenMapTiles](https://openmaptiles.org/) et [OpenStreetMap](https://www.openstreetmap.org/copyright)
+- [Étude préalable d’Épione et de TheNextIs](docs/ETUDE_REFERENCES_2026-10-05.md)
+
+Le code GPLv3 d’Épione n’est pas incorporé. TheNextIs a servi de référence d’interaction ; son application complète n’a pas été copiée.
