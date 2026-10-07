@@ -1,0 +1,41 @@
+const assert=require('node:assert/strict'),{randomUUID}=require('node:crypto');
+const {database,asRole,users}=require('./database-fixture.cjs');
+(async()=>{
+ const db=await database(),[alice,bob]=users;
+ const read=(uid,sql,args)=>asRole(db,uid?'authenticated':'anon',uid,sql,args);
+ const insert=(uid,status,id=randomUUID(),pharmacy='910010263')=>read(uid,'insert into public.stock_reports(id,pharmacy_id,status,method) values($1,$2,$3,$4) returning id,pharmacy_id,status,created_at,call_date,participant_id,participant_key',[id,pharmacy,status,'phone']);
+ assert.equal((await read(null,'select count(*) from public.known_pharmacies')).rows[0].count,19917);
+ assert.equal((await read(null,'select count(*) from public.stock_reports')).rows[0].count,15);
+ await assert.rejects(insert(null,'plenty'),e=>e.code==='42501');
+ const id=randomUUID(),first=(await insert(alice.id,'plenty',id)).rows[0];
+ assert.equal(first.participant_id,'alice');assert.equal(first.participant_key,'github:1001');assert.ok(Math.abs(Date.now()-new Date(first.created_at).getTime())<5000);
+ await assert.rejects(insert(alice.id,'plenty',id),e=>e.code==='23505');
+ await insert(alice.id,'limited');await insert(bob.id,'plenty');
+ let r=(await read(null,"select * from public.latest_reports where pharmacy_id='910010263'")).rows[0];assert.equal(r.report_count,3);assert.equal(r.participant_count,2);assert.equal(r.participant_id,'bob');
+ await assert.rejects(insert(alice.id,'plenty',randomUUID(),'999999999'),e=>e.code==='23503');
+ await assert.rejects(insert(alice.id,'available'),e=>e.code==='22023');
+ for(const column of ['created_at','participant_id','user_id','hidden']){
+  const value={created_at:'2030-01-01T12:00:00Z',participant_id:'bob',user_id:bob.id,hidden:true}[column];
+  await assert.rejects(read(alice.id,`insert into public.stock_reports(id,pharmacy_id,status,${column}) values($1,$2,$3,$4)`,[randomUUID(),'910010263','plenty',value]),e=>e.code==='42501');
+ }
+ await db.query('update auth.users set raw_user_meta_data=$1 where id=$2',[JSON.stringify({user_name:'bob',role:'admin'}),alice.id]);
+ const unchanged=(await insert(alice.id,'plenty')).rows[0];assert.equal(unchanged.participant_id,'alice');
+ await assert.rejects(read(alice.id,'update public.stock_reports set status=$1 where id=$2',['none',id]),e=>e.code==='42501');
+ await assert.rejects(read(bob.id,'delete from public.stock_reports where id=$1',[id]),e=>e.code==='42501');
+ await assert.rejects(read(alice.id,"insert into public.known_pharmacies values('999999998')"),e=>e.code==='42501');
+ await assert.rejects(read(alice.id,'select private.prepare_contribution()'),e=>e.code==='42501');
+ await db.query('update public.stock_reports set hidden=true where id=$1',[unchanged.id]);
+ r=(await read(null,"select * from public.latest_reports where pharmacy_id='910010263'")).rows[0];assert.equal(r.report_count,3);assert.equal(r.participant_count,2);
+ const candidate='community-'+randomUUID();
+ await read(alice.id,'insert into public.pharmacy_candidates(id,name,address,postcode,city,phone,latitude,longitude,officine) values($1,$2,$3,$4,$5,$6,$7,$8,true)',[candidate,'Pharmacie de test','1 avenue de test, 91300 Massy','91300','Massy','+33123456789',48.724,2.26]);
+ assert.equal((await read(null,'select id from public.pharmacy_candidates where id=$1',[candidate])).rows.length,0);
+ assert.equal((await read(alice.id,'select id from public.pharmacy_candidates where id=$1',[candidate])).rows.length,1);
+ assert.equal((await read(bob.id,'select id from public.pharmacy_candidates where id=$1',[candidate])).rows.length,0);
+ await assert.rejects(read(alice.id,'update public.pharmacy_candidates set moderation=$1 where id=$2',['approved',candidate]),e=>e.code==='42501');
+ await assert.rejects(insert(alice.id,'plenty',randomUUID(),candidate),e=>e.code==='23503');
+ await db.query('update public.pharmacy_candidates set moderation=$1 where id=$2',['approved',candidate]);
+ assert.equal((await read(null,'select id from public.pharmacy_candidates where id=$1',[candidate])).rows.length,1);await insert(bob.id,'limited',randomUUID(),candidate);
+ const n=Number((await db.query('select count(*) from public.stock_reports where user_id=$1',[alice.id])).rows[0].count);
+ for(let i=n;i<40;i++)await insert(alice.id,'plenty');await assert.rejects(insert(alice.id,'none'),e=>e.code==='P0001');
+ console.log(JSON.stringify({pharmacies:19917,archives:15,publicReading:true,authenticatedWrites:true,serverTimestamp:true,verifiedIdentity:true,distinctPeople:true,ownership:true,moderation:true,rateLimit:true}));await db.close();
+})().catch(e=>{console.error({message:e.message,code:e.code,detail:e.detail});process.exit(1);});

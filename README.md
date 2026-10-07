@@ -2,6 +2,8 @@
 
 [Ouvrir la carte publique](https://ortiz-luis.github.io/fluoxetine-france/).
 
+Le partage direct est connecté au projet Supabase gratuit dédié. Les participants se connectent avec GitHub et publient depuis une fiche, sans ouvrir un ticket ni modifier le code. Voir [le checkpoint de validation](docs/CHECKPOINT_PARTAGE.md).
+
 Une carte en français pour partager la disponibilité de la fluoxétine, après un appel ou une visite en pharmacie. La consultation est libre. Un compte GitHub gratuit suffit pour contribuer.
 
 ## Trouver et renseigner une pharmacie
@@ -12,23 +14,19 @@ Trois parcours conduisent aux mêmes fiches, déjà préparées :
 - **Par code postal** : saisir les cinq chiffres sous la carte et choisir **Voir la zone**, puis toucher une pharmacie.
 - **Dans la liste** : rechercher quelques mots du nom, la commune, le code postal ou l’adresse. La liste **Cette zone** suit la carte ; **Toutes** permet une recherche nationale. Seules quelques dizaines de fiches sont créées à la fois.
 
-La fiche montre l’adresse, le téléphone quand il est disponible, la dernière disponibilité et son historique. Choisir **Oui, en quantité**, **Oui, mais peu** ou **Non disponible** ouvre un signalement GitHub entièrement prérempli, en français et sans bloc de code à manipuler. Il reste à confirmer sa publication avec **Create** ou **Submit new issue**. Aucun nom de pharmacie, adresse ou horodatage n’est à recopier.
+La fiche montre l’adresse, le téléphone et les signalements. Choisir **Oui, en quantité**, **Oui, mais peu** ou **Non disponible** publie directement depuis la fiche, après une connexion GitHub la première fois. Aucun ticket GitHub, nom de pharmacie, adresse ou horodatage ne sera à remplir.
 
 L’origine de l’information peut être précisée, de façon facultative : **Par téléphone** ou **Sur place**. Sans réponse de la pharmacie, ne pas déclarer une indisponibilité.
 
-Le site lit les contributions publiques GitHub et se réactualise. Le bouton **Actualiser** permet aussi de les relire après publication. L’envoi ouvre une page GitHub : choisir un bouton sur la carte ne suffit pas encore à publier le signalement. Les limitations de l’API GitHub peuvent temporairement interrompre l’actualisation ; les derniers signalements chargés restent visibles.
-
 ## Horodatage, participants et historique
 
-Les nouveaux signalements contiennent uniquement des champs lisibles et un lien vers la fiche. Les anciennes publications au format structuré restent compatibles. Une aide persistante explique le dernier clic de confirmation et le retour à la carte.
+Les nouveaux signalements sont conservés séparément dans PostgreSQL/Supabase. La date et l’heure sont imposées par le serveur et affichées selon l’heure de Paris. Elles correspondent à la publication : publier immédiatement après l’appel ou la visite. Le nom public vient de l’identité GitHub vérifiée ; aucun document médical ni renseignement de patient n’est demandé.
 
-La date et l’heure affichées viennent de `created_at`, fourni par GitHub lors de la publication. Elles sont affichées selon l’heure de Paris. Une éventuelle date ajoutée à la main au contenu du signalement est ignorée. Publier immédiatement après l’appel ou la visite : l’heure enregistrée est celle de la publication, pas une heure de contact que le système pourrait deviner.
+La carte charge une synthèse par pharmacie, avec les nombres de publications et de participants distincts. L’historique est chargé lorsqu’une fiche est ouverte. Le dernier signalement s’affiche ; les anciens sont conservés. Plusieurs contributions du même compte ne deviennent pas plusieurs participants indépendants. Les 15 publications existantes sont importées avec leurs horodatages d’origine.
 
-L’identifiant public GitHub de l’auteur est affiché. Plusieurs participants peuvent renseigner la même pharmacie. Le dernier signalement est principal, les précédents restent consultables. Les nombres de **signalements** et de **comptes participants distincts** sont séparés ; trois publications d’une personne ne deviennent pas trois personnes indépendantes.
+Après **48 heures**, un signalement passe à **À reconfirmer**, avec un point beige, et quitte le décompte des disponibilités récentes. Ce délai est une règle d’affichage, sans garantie de stock pendant 48 heures.
 
-Après **48 heures**, une information passe à **À reconfirmer**, avec un point beige, et quitte le décompte des disponibilités récentes. Elle reste dans l’historique. Ce délai est une règle d’affichage, pas une garantie de stock pendant 48 heures.
-
-Les couleurs : vert soutenu = en quantité ; vert clair = peu de stock ; vert intermédiaire = disponible sans indication de quantité ; rose pâle = indisponible ; gris = aucune information partagée ; beige = à reconfirmer. Un point gris ne signifie jamais « indisponible ».
+Vert soutenu = en quantité ; vert clair = peu de stock ; vert intermédiaire = disponible sans indication de quantité ; rose pâle = indisponible ; gris = aucune information partagée ; beige = à reconfirmer. Un point gris ne signifie jamais « indisponible ».
 
 ## Répertoire national et précision
 
@@ -46,9 +44,9 @@ Les 13 disponibilités initiales et les deux signalements d’Antony restent li�
 
 ## Modération et nouvelles fiches
 
-Les participants publient des signalements ; cette possibilité ne leur donne aucun droit de modification du code ou du répertoire officiel. Aucun contributeur n’est invité comme collaborateur du dépôt pour participer. La lecture et les signalements ne donnent pas le droit de pousser du code ; une proposition de changement ne se publie pas automatiquement. Le responsable peut fermer un signalement ou lui ajouter un label `invalide`, `invalid`, `spam` ou `doublon` pour l’exclure de la carte.
+Les participants peuvent ajouter des informations après une connexion GitHub, sans invitation comme collaborateurs du dépôt. Les autorisations de base de données interdisent les modifications du répertoire, des dates, de l’identité et des anciennes réponses. Le responsable peut masquer un signalement ; l’historique visible et ses compteurs se mettent alors à jour.
 
-Si une pharmacie manque vraiment, le bouton **Une pharmacie manque ?** prépare une proposition distincte. Le responsable vérifie qu’il s’agit d’une officine, son adresse et son téléphone, puis ajoute le label **pharmacie-validée**. Le point apparaît alors sur la carte et peut être renseigné comme les autres. Les propositions sans ce label n’apparaissent pas. Fermer la proposition retire la fiche communautaire de l’affichage. Les anciens ajouts en texte libre doivent être vérifiés et incorporés au répertoire ou convertis au nouveau format.
+**Une pharmacie manque ?** envoie une proposition depuis la page. Elle n’apparaît publiquement qu’après validation de l’officine, de l’adresse et du téléphone par le responsable. Le schéma et les droits sont décrits dans [l’activation du partage](docs/ACTIVATION_PARTAGE.md).
 
 ## Technologie et entretien
 
@@ -60,13 +58,15 @@ Le site reste composé de fichiers statiques, hébergés sur GitHub Pages, sans 
 python3 scripts/build_directory.py --geocode
 ```
 
-Cette commande constitue l’outil d’entretien ; aucun serveur, abonnement ou service de base de données n’est nécessaire pour la version actuelle. Aucun nouveau traitement périodique n’est activé par cette modification.
+Cette commande constitue l’outil d’entretien du répertoire statique. Les contributions sont séparées dans Supabase. Aucun nouveau traitement périodique du répertoire n’est activé par cette modification. Le SDK Supabase 2.117.3 est distribué localement sous sa licence MIT ; les dépendances sont épinglées dans le fichier de verrouillage.
 
 La géolocalisation sert à centrer la carte et n’est pas ajoutée aux signalements. La disponibilité, l’identifiant GitHub et la date de publication sont publics. Ne publier aucun document médical ni information concernant un patient.
 
 ## Vérifications
 
-`tests/check-contribution.cjs` vérifie les formats lisibles, l’horodatage serveur et la modération. `tests/check-fallback.cjs` vérifie les parcours réels sans WebGL en tailles ordinateur et téléphone. `tests/check-national.cjs` contrôle l’intégrité et la fusion du jeu réel, le point de Massy, le code postal de Strasbourg, la géolocalisation, les trois réponses préremplies, les dates automatiques, l’auteur et les comptes distincts, les contradictions successives, la persistance après rechargement et la limite de fiches HTML en tailles ordinateur et téléphone. Les contributions du test sont simulées : aucun signalement fictif n’est publié. Le test utilise Playwright et un navigateur Chromium, avec `TEST_CHROMIUM` pour fournir son exécutable.
+`npm test` lance les tests du schéma dans PostgreSQL local et les parcours réels sur navigateur, avec le jeu national complet. Les contrôles comprennent : lecture sans compte, refus des écritures anonymes, deux identités OAuth simulées, horodatage serveur, champs protégés, historique et comptes distincts, modération, limite d’envoi, persistance pour un autre navigateur, réessai sans doublon après réponse réseau perdue, code postal et localisation, points tactiles, moteurs MapLibre et Leaflet, lisibilité en 1 440 × 1 000 et 390 × 844. Aucun signalement fictif n’est publié.
+
+`TEST_CHROMIUM` peut désigner un exécutable Chromium. Les tests de navigateur simulent le fournisseur OAuth et l’API HTTP devant une vraie base PostgreSQL locale : ils ne remplacent pas la validation du projet Supabase et de la connexion GitHub en production.
 
 ## Sources
 
