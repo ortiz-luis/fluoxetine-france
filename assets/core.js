@@ -21,7 +21,7 @@
   const pharmacyId=r.pharmacy_id||r.pharmacyId,date=r.call_date||r.date,created=r.created_at||r.reportedAt;
   if(typeof pharmacyId!=='string'||!catalog.has(pharmacyId)||!validDate(date,now)||!Number.isFinite(Date.parse(created)))return null;
   const method=['phone','visit','other'].includes(r.method)?r.method:'other';
-  return {id:String(r.id),pharmacyId,status:r.status,date,reportedAt:new Date(created).toISOString(),source:r.source||'community',participantId:r.participant_id||r.participantId||null,method};
+  return {id:String(r.id),pharmacyId,status:r.status,date,reportedAt:new Date(created).toISOString(),source:r.source||'community',participantId:r.participant_id||r.participantId||null,participantKey:r.participant_key||r.participantKey||null,reportCount:Number.isInteger(r.report_count??r.reportCount)?(r.report_count??r.reportCount):null,participantCount:Number.isInteger(r.participant_count??r.participantCount)?(r.participant_count??r.participantCount):null,method};
  }
  function parseGithubIssue(issue,catalog,now=new Date()){
   if(!issue||issue.state!=='open'||issue.pull_request||typeof issue.body!=='string')return null;
@@ -44,7 +44,7 @@
  function latestReports(reports){const out=new Map();for(const r of reports){const old=out.get(r.pharmacyId);if(!old||r.date>old.date||(r.date===old.date&&r.reportedAt>old.reportedAt))out.set(r.pharmacyId,r);}return out;}
  function hasPosition(p){return Boolean(p&&Number.isFinite(p.lat)&&Number.isFinite(p.lng)&&Math.abs(p.lat)<=85&&Math.abs(p.lng)<=180);}
  function validPharmacy(p){return Boolean(p&&typeof p.id==='string'&&p.id.length<=80&&typeof p.name==='string'&&p.name.trim().length>=2&&p.name.length<=200&&typeof p.address==='string'&&p.address.length>=8&&p.address.length<=350&&/^\d{5}$/.test(p.postcode)&&typeof p.city==='string'&&p.city.length>=2&&p.city.length<=100&&(hasPosition(p)||(p.lat===null&&p.lng===null))&&(p.phone===''||phone(p.phone)));}
- function personCount(reports){return new Set(reports.map(r=>r.participantId).filter(Boolean)).size;}
+ function personCount(reports){return new Set(reports.map(r=>r.participantKey||r.participantId).filter(Boolean)).size;}
  function parseGithubCandidate(issue){
   if(!issue||issue.state!=='open'||issue.pull_request||typeof issue.body!=='string'||!issue.labels?.some(label=>(typeof label==='string'?label:label.name)==='pharmacie-validée'))return null;
   const match=issue.body.match(/<!-- fluoxetine-pharmacy:v1 -->\s*```json\s*([\s\S]*?)\s*```/);

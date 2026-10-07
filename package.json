@@ -2,6 +2,15 @@
   "name": "fluoxetine-carte-entraide",
   "version": "1.0.0",
   "private": true,
-  "scripts": {"test": "node tests/check-national.cjs"},
-  "devDependencies": {"playwright": "1.62.1"}
+  "scripts": {
+    "test": "node tests/check-database.cjs && node tests/check-direct.cjs",
+    "prepare:backend": "node scripts/prepare_backend.cjs"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "0.5.8",
+    "playwright": "1.62.1"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "2.117.3"
+  }
 }
