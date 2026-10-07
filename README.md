@@ -2,7 +2,7 @@
 
 [Ouvrir la carte publique](https://ortiz-luis.github.io/fluoxetine-france/).
 
-**Branche de préparation du partage direct.** Le service de stockage et la connexion GitHub doivent encore être activés. Le site public utilise toujours la version précédente. Voir [les étapes d’activation](docs/ACTIVATION_PARTAGE.md).
+Le partage direct est connecté au projet Supabase gratuit dédié. Les participants se connectent avec GitHub et publient depuis une fiche, sans ouvrir un ticket ni modifier le code. Voir [le checkpoint de validation](docs/CHECKPOINT_PARTAGE.md).
 
 Une carte en français pour partager la disponibilité de la fluoxétine, après un appel ou une visite en pharmacie. La consultation est libre. Un compte GitHub gratuit suffit pour contribuer.
 
@@ -14,7 +14,7 @@ Trois parcours conduisent aux mêmes fiches, déjà préparées :
 - **Par code postal** : saisir les cinq chiffres sous la carte et choisir **Voir la zone**, puis toucher une pharmacie.
 - **Dans la liste** : rechercher quelques mots du nom, la commune, le code postal ou l’adresse. La liste **Cette zone** suit la carte ; **Toutes** permet une recherche nationale. Seules quelques dizaines de fiches sont créées à la fois.
 
-La fiche montre l’adresse, le téléphone et les signalements. Choisir **Oui, en quantité**, **Oui, mais peu** ou **Non disponible** publiera directement depuis la fiche, après une connexion GitHub la première fois. Aucun ticket GitHub, nom de pharmacie, adresse ou horodatage ne sera à remplir.
+La fiche montre l’adresse, le téléphone et les signalements. Choisir **Oui, en quantité**, **Oui, mais peu** ou **Non disponible** publie directement depuis la fiche, après une connexion GitHub la première fois. Aucun ticket GitHub, nom de pharmacie, adresse ou horodatage ne sera à remplir.
 
 L’origine de l’information peut être précisée, de façon facultative : **Par téléphone** ou **Sur place**. Sans réponse de la pharmacie, ne pas déclarer une indisponibilité.
 

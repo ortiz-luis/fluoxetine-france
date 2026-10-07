@@ -1,6 +1,6 @@
 # Activation des contributions depuis la carte
 
-La branche `partage-direct` prépare le remplacement du formulaire GitHub par un envoi depuis la fiche. Le site public reste sur l’ancienne version jusqu’à la validation complète du service. Le fichier `assets/config.js` est volontairement vide : aucun stockage distant de ce projet n’a encore été créé.
+Le projet dédié `fwuieqdxzfrlghgrlenm` est créé dans joseluis, à Paris, au coût confirmé de 0 par mois. Schéma et import appliqués ; fournisseur GitHub activé. La connexion réelle, l’identité côté serveur, la publication depuis le client et la lecture publique ont été vérifiées le 7 octobre 2026. Les instructions ci-dessous documentent la configuration existante : ne pas recréer le projet ni l’application OAuth. Voir docs/CHECKPOINT_PARTAGE.md.
 
 ## Parcours destiné aux participants
 
