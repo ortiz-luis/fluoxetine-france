@@ -1,20 +1,12 @@
 ---
-name: Signaler une disponibilité
-about: Partager une information obtenue par téléphone ou sur place
-title: "[Confirmation] "
-labels: "confirmation"
+name: Partager une disponibilité
+about: Confirmer une information obtenue après un appel ou une visite.
+title: Disponibilité de la fluoxétine
 ---
 
-Merci de vérifier les informations préremplies, puis de cliquer sur **Submit new issue**.
+La fiche est préparée automatiquement depuis la carte :
+https://ortiz-luis.github.io/fluoxetine-france/
 
-La date et l'heure enregistrées sont celles de la publication de cette issue, automatiquement selon le système GitHub.
+Touchez une pharmacie, choisissez sa disponibilité, puis confirmez ici avec le bouton vert « Create » ou « Submit new issue ».
 
-<!-- fluoxetine-report:v2 -->
-```json
-{
-  "schema": 2,
-  "pharmacyId": "",
-  "status": "plenty",
-  "method": "other"
-}
-```
+La date, l’heure et votre identifiant sont enregistrés automatiquement. Aucun droit de modification du code ne vous est accordé.

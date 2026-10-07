@@ -28,10 +28,12 @@ const realIssues=[issue(91,'920007911','available','exemple','2026-10-05T13:30:5
  const browser=await chromium.launch({proxy,executablePath,args:['--no-sandbox','--enable-unsafe-swiftshader','--use-gl=angle','--use-angle=swiftshader']});
  for(const viewport of [{width:1440,height:1000},{width:390,height:844}]){
   const context=await browser.newContext({viewport,ignoreHTTPSErrors:true,geolocation:{latitude:48.724303,longitude:2.260258},permissions:['geolocation']});const page=await context.newPage();const errors=[],requests=[];
+  await context.route('https://github.com/ortiz-luis/fluoxetine-france/issues/new?*',r=>r.fulfill({status:200,contentType:'text/html',body:'<!doctype html><title>Confirmation simulée</title><p>Cette page est un test. Aucun signalement publié.</p>'}));
   const outgoing=[];context.on('request',r=>{if(r.url().startsWith('https://github.com/ortiz-luis/fluoxetine-france/issues/new'))outgoing.push(r.url());});
   page.on('pageerror',e=>errors.push(e.message));page.on('requestfailed',r=>requests.push(r.url()+': '+r.failure()?.errorText));
   let consoleCount=0;page.on('console',message=>{if(['error','warning'].includes(message.type())&&consoleCount++<4)console.log('Console:',message.text().slice(0,350));});
   await page.addInitScript(()=>{Object.defineProperty(window,'maplibregl',{configurable:true,set(value){const Original=value.Map;value.Map=class extends Original{constructor(options){super(options);window.__testMap=this;}};Object.defineProperty(window,'maplibregl',{value,writable:true,configurable:true});}});});
+  await page.clock.setFixedTime(new Date('2026-10-06T07:00:00Z'));
   let fixture=realIssues;
   await page.route('https://api.github.com/repos/ortiz-luis/fluoxetine-france/issues?*',r=>r.fulfill({status:200,contentType:'application/json',body:JSON.stringify(fixture)}));
   const started=Date.now();await page.goto('http://127.0.0.1:8795/?pharmacy=910010263');
@@ -52,8 +54,8 @@ const realIssues=[issue(91,'920007911','available','exemple','2026-10-05T13:30:5
   assert.match(await page.locator('#reportPharmacyName').innerText(),/Deux Gares/);
   assert.equal(await page.locator('#reportDialog button[name=answer]').count(),3);assert.equal(await page.locator('#reportDialog input[type=date]').count(),0);
   await page.locator('.method-options summary').click();await page.locator('input[name=method][value=visit]').check();
-  const [popup]=await Promise.all([page.waitForEvent('popup'),page.locator('button[name=answer][value=plenty]').click()]);
-  await popup.waitForLoadState('domcontentloaded',{timeout:15000}).catch(()=>{});const url=new URL(outgoing.at(-1));assert.equal(url.hostname,'github.com');assert.match(url.searchParams.get('body'),/910010263/);assert.match(url.searchParams.get('body'),/"method": "visit"/);assert.ok(!url.searchParams.get('body').includes('"date"'));assert.ok(!url.searchParams.get('body').includes('48.724303'));await popup.close();
+  let popup;try{[popup]=await Promise.all([page.waitForEvent('popup',{timeout:8000}),page.locator('button[name=answer][value=plenty]').click()]);}catch(error){console.log('Contribution debug:',errors,outgoing,await page.locator('#reportDialog').innerText());throw error;}
+  await popup.waitForLoadState('domcontentloaded',{timeout:15000}).catch(()=>{});const url=new URL(outgoing.at(-1));assert.equal(url.hostname,'github.com');assert.match(url.searchParams.get('body'),/910010263/);assert.match(url.searchParams.get('body'),/Information obtenue : Sur place/);assert.ok(!url.searchParams.get('body').includes('```'));assert.ok(!url.searchParams.get('body').includes('schema'));assert.ok(!url.searchParams.get('body').includes('"date"'));assert.equal(await page.locator('#publicationHelp').isVisible(),true);assert.ok(!url.searchParams.get('body').includes('48.724303'));await popup.close();
   // Aucune publication fictive : l'API est simulée pour vérifier la synchronisation.
   fixture=[old,twice,second,...realIssues];await page.locator('#refresh').click();await page.waitForFunction(()=>document.querySelector('#detail').textContent.includes('participant-b'));
   assert.match(await page.locator('#detail').innerText(),/Non disponible/);assert.match(await page.locator('#detail').innerText(),/3 signalements · 2 comptes participants/);
@@ -62,6 +64,7 @@ const realIssues=[issue(91,'920007911','available','exemple','2026-10-05T13:30:5
   await page.locator('#pharmacyList .list-card').click();assert.equal(await page.locator('#reportDialog').evaluate(d=>d.open),true);await page.locator('#cancelReport').click();
   await page.locator('#search').fill('');await page.locator('#tabAll').click();assert.ok(await page.locator('#pharmacyList .list-card').count()<=40);
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);assert.deepEqual(errors,[]);
+  await page.waitForFunction(()=>document.querySelector('#map').dataset.ready==='true');await page.waitForTimeout(800);
   await page.screenshot({path:path.join(output,'national-'+viewport.width+'.png'),fullPage:true});
   console.log(JSON.stringify({viewport,records:19917,plenty:15,domCards:await page.locator('#pharmacyList .list-card').count(),errors,failedRequests:requests.slice(0,5)}));await context.close();
  }

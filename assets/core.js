@@ -27,8 +27,17 @@
   if(!issue||issue.state!=='open'||issue.pull_request||typeof issue.body!=='string')return null;
   if(issue.labels?.some(label=>['invalid','invalide','spam','doublon'].includes(typeof label==='string'?label:label.name)))return null;
   const match=issue.body.match(/<!-- fluoxetine-report:v2 -->\s*```json\s*([\s\S]*?)\s*```/);
-  if(!match)return null; let value; try{value=JSON.parse(match[1]);}catch{return null;}
-  if(value.schema!==2||!Number.isFinite(Date.parse(issue.created_at)))return null;
+  let value;
+  if(match){try{value=JSON.parse(match[1]);}catch{return null;}if(value.schema!==2)return null;}
+  else{
+   const line=label=>issue.body.match(new RegExp('^'+label+'[ \\t]*:[ \\t]*(.+)$','m'))?.[1]?.trim();
+   const answers={'Oui, en quantité':'plenty','Oui, mais peu':'limited','Non disponible':'none','Disponible':'available'};
+   const methods={'Appel téléphonique':'phone','Sur place':'visit','Non précisé':'other'};
+   let fiche;try{fiche=new URL(line('Fiche'));}catch{return null;}
+   if(fiche.origin!=='https://ortiz-luis.github.io'||fiche.pathname!=='/fluoxetine-france/'||!answers[line('Réponse')])return null;
+   value={pharmacyId:fiche.searchParams.get('pharmacy'),status:answers[line('Réponse')],method:methods[line('Information obtenue')]||'other'};
+  }
+  if(!Number.isFinite(Date.parse(issue.created_at)))return null;
   const published=new Date(issue.created_at);
   return parseReport({id:'github-'+issue.number,pharmacyId:value.pharmacyId,status:value.status,date:parisDate(published),created_at:issue.created_at,source:'community',participantId:issue.user?.login||null,method:value.method},catalog,now);
  }
@@ -38,8 +47,14 @@
  function personCount(reports){return new Set(reports.map(r=>r.participantId).filter(Boolean)).size;}
  function parseGithubCandidate(issue){
   if(!issue||issue.state!=='open'||issue.pull_request||typeof issue.body!=='string'||!issue.labels?.some(label=>(typeof label==='string'?label:label.name)==='pharmacie-validée'))return null;
-  const match=issue.body.match(/<!-- fluoxetine-pharmacy:v1 -->\s*```json\s*([\s\S]*?)\s*```/);if(!match)return null;
-  let value;try{value=JSON.parse(match[1]);}catch{return null;}
+  const match=issue.body.match(/<!-- fluoxetine-pharmacy:v1 -->\s*```json\s*([\s\S]*?)\s*```/);
+  let value;if(match){try{value=JSON.parse(match[1]);}catch{return null;}}
+  else{
+   const line=label=>issue.body.match(new RegExp('^'+label+'[ \\t]*:[ \\t]*(.+)$','m'))?.[1]?.trim();
+   let position;try{position=new URL(line('Emplacement'));}catch{return null;}
+   if(position.origin!=='https://www.openstreetmap.org'||position.pathname!=='/'||!position.searchParams.has('mlat')||!position.searchParams.has('mlon'))return null;
+   value={schema:1,officine:line('Pharmacie d’officine')==='Oui',pharmacy:{id:line('Référence de la proposition'),name:line('Nom'),address:line('Adresse'),postcode:line('Code postal'),city:line('Commune'),phone:line('Téléphone')||'',lat:Number(position.searchParams.get('mlat')),lng:Number(position.searchParams.get('mlon'))}};
+  }
   if(value.schema!==1||value.officine!==true||!validPharmacy(value.pharmacy)||!hasPosition(value.pharmacy)||!/^community-[a-zA-Z0-9-]+$/.test(value.pharmacy.id))return null;
   const p=value.pharmacy;return {id:p.id,name:p.name,address:p.address,postcode:p.postcode,city:p.city,phone:p.phone,lat:p.lat,lng:p.lng,source:'Ajout communautaire vérifié'};
  }
