@@ -1,32 +1,37 @@
-# État du déploiement — 7 octobre 2026
+# Checkpoint final — 7 octobre 2026
 
-Organisation : joseluis (`rooyarjqmsvfruxdbkrh`), plan gratuit.
-Coût confirmé : 0 par mois.
-Projet dédié créé : `fluoxetine-france`, région Paris (`eu-west-3`).
-Référence : `fwuieqdxzfrlghgrlenm`.
-URL publique API : https://fwuieqdxzfrlghgrlenm.supabase.co
+## A — Projet gratuit : terminé
 
-Ne pas recréer le projet. Le site public reste sur main ; la branche partage-direct prépare les contributions directes.
+Organisation joseluis (`rooyarjqmsvfruxdbkrh`), plan gratuit. Coût confirmé : 0 par mois. Projet dédié `fluoxetine-france`, référence `fwuieqdxzfrlghgrlenm`, région Paris `eu-west-3`. Ne pas recréer le projet ni l’application OAuth.
 
-Phase B achevée : schéma et RLS appliqués ; 19 917 identifiants et 15 publications historiques importés. API publique testée avec la clé publiable : lecture 200 ; écriture anonyme, modification du répertoire et lecture user_id refusées 401. Champs auteur et date protégés ; UPDATE et DELETE non accordés aux participants. Déclencheur de contrôle actif. Conseiller sécurité : aucun avertissement. Politiques de lecture des candidatures regroupées par rôle.
+## B — Base et droits : terminé
 
-Premier point restant : phase C, vérifier les redirections et la connexion OAuth GitHub réelle (fournisseur désormais activé). Puis D : contribution réelle partagée entre sessions ; E : publication et vérification publique ; F : supports de diffusion. Aucun signalement de test n'a été enregistré.
+19 917 identifiants connus ; 15 publications historiques importées avec leurs dates d’origine. RLS sur les tables, vue security_invoker, champs auteur et horodatage imposés côté serveur. API réelle : lecture publique 200 ; écritures anonymes, lecture user_id et modification du répertoire refusées. Les participants ne peuvent pas modifier ou supprimer les anciennes publications. Conseiller sécurité sans avertissement. Les limites de débit, propositions modérées et deux identités ont été vérifiées localement dans PostgreSQL.
 
-Checkpoint précédent de C : GitHub était désactivé ; il est désormais activé. Les connecteurs disponibles ne gèrent pas les applications OAuth GitHub ni les paramètres des fournisseurs Supabase. Intervention du propriétaire nécessaire pour créer l'application OAuth et saisir son secret dans Supabase uniquement.
+## C — OAuth réel : terminé
 
-Application OAuth : nom « Fluoxétine — entraide en pharmacies » ; accueil https://ortiz-luis.github.io/fluoxetine-france/ ; rappel https://fwuieqdxzfrlghgrlenm.supabase.co/auth/v1/callback . Configurer la Site URL et la redirection autorisée sur l'URL exacte GitHub Pages. Ne pas partager le secret dans le chat ou dans GitHub.
+Fournisseur GitHub activé. Site URL et redirection exacte : https://ortiz-luis.github.io/fluoxetine-france/ . Application OAuth existante conservée ; aucune recréation de Client ID ou de secret. Approbation donnée par le propriétaire. Après expiration d’un state, un nouveau flux PKCE a réussi : compte ortiz-luis affiché au retour. Autorisations : profil et courrier électronique en lecture seule, aucun accès repo. Aucune adresse électronique exposée dans les données publiques.
 
-Reprise de C : GitHub activé dans l'API Auth, inscriptions anonymes désactivées. La requête authorize renvoie 302 vers GitHub avec un Client ID et le rappel exact https://fwuieqdxzfrlghgrlenm.supabase.co/auth/v1/callback . Aucun compte GitHub ni session encore enregistré : la connexion de production reste à vérifier.
+## D — Partage réel : terminé
 
-Blocage navigateur : la connexion au tableau de bord Supabase via GitHub a abouti à une page GitHub « Server Error », erreur 500. Il s'agit de l'application OAuth du tableau de bord Supabase, pas d'une preuve d'échec de l'application du projet. Site URL et liste de redirections non vérifiées. Ne pas annoncer C, D ou E comme achevées. Aucun faux signalement créé. Le site public et la configuration vide restent inchangés.
+Test synthétique hors du répertoire cartographique publié depuis une session GitHub réelle à 17:29:10.639914 UTC. Auteur vérifié côté serveur : github:63545750. Réessai même UUID : une seule publication. Lecture publique sans JWT depuis un client indépendant, puis nouvelle page sans session après déconnexion et rechargement. Deux modes de session testés ; pas deux comptes GitHub réels. Les tests locaux avaient vérifié deux participants simulés. Données synthétiques ensuite supprimées.
 
-Nouvelle reprise : les écritures GitHub fonctionnent de nouveau. Le checkpoint précédent a été sauvegardé dans partage-direct, commit 047ba88f13c6b435ac00534ce6a923692c38b661. Session du tableau de bord Supabase ouverte et configuration des URL vérifiée visuellement. URL supplémentaire temporaire /verification/ autorisée pour tester OAuth avant le remplacement du site.
+## E — Site public : terminé
 
-Page de vérification isolée ajoutée sur main : commit 32801d55551ba8b3c8661d5f674b2190ad516b98. Le site principal reste inchangé. Identifiant synthétique du test : community-a3499bf2-4a2b-4981-87d4-c44fed7d8879, hors du répertoire cartographique. Supprimer ses données et la page après vérification. La page réutilise les blobs SDK et community.js préparés, pas une implémentation différente. C réelle et D restent à vérifier.
+PR #3 fusionnée : 620416be2d96d4f20601db9a5c7d8c211c0c83a2. Nettoyage : e0d7576a1d98bc5a7faf709997b2c06bf9e486cd, déploiement GitHub Pages réussi 37660281060.
 
-C en attente d'approbation finale OAuth : /verification/ est publié (GitHub Pages succès). Le bouton de connexion ouvre l'autorisation de l'application « Fluoxétine — entraide en pharmacies », Client ID Ov23liX5bNRfmYnAFbDI. Le compte ortiz-luis est identifié. Accès demandé : profil et adresses électroniques en lecture seule ; aucune permission repo. L'approbation doit être donnée par le propriétaire. Après approbation, vérifier le retour /verification/, la session et l'identité côté serveur ; publier le test synthétique puis vérifier sa lecture depuis un navigateur anonyme indépendant. C et D non achevées.
+URL : https://ortiz-luis.github.io/fluoxetine-france/
 
-C achevée : nouveau flux PKCE après expiration du state ; retour réussi /verification/ et compte GitHub ortiz-luis affiché. D achevée : publication réelle du test 36320dbd-ea69-42a4-84b0-7fdee52dc405 à 2026-10-07T17:29:10.639914Z ; identité vérifiée github:63545750. Réessai même UUID : toujours une seule publication. Lecture publique via clé publiable sans JWT, puis nouvelle session de navigateur après déconnexion et rechargement. Deux modes de session testés, pas deux comptes GitHub réels. E en cours : connecter la configuration publique et publier le site principal, puis vérifier le parcours de Massy sur la page publique.
+Parcours réel vérifié sur l’URL publique : fiche de Massy, choix quantité et téléphone, connexion, retour à la fiche et publication confirmée sans ticket GitHub. Toucher le point vert ouvre les trois réponses. Lecture sans compte et après rechargement vérifiée. Publication Massy affichée 7 octobre 2026 à 19:34, heure de publication : information communiquée précédemment par le propriétaire, aucun nouvel appel effectué par l’agent. Base : 19 917 identifiants et 16 publications (15 historiques + Massy).
 
-E vérifiée sur l'URL publique après fusion PR #3 (620416be2d96d4f20601db9a5c7d8c211c0c83a2). Parcours réel : fiche Massy, choix quantité et téléphone, connexion GitHub, retour automatique et publication confirmée. Information fournie précédemment par le propriétaire, pas un nouveau coup de téléphone effectué par l'agent. Affichage 7 octobre 2026 19:34 (heure de publication). Toucher le point vert ouvre directement les trois options ; aucun ticket GitHub. Le répertoire reste 19 917 fiches. Test synthétique supprimé ; base contient les 15 publications historiques et le signalement Massy. Nettoyage de la page de vérification en cours.
+Page /verification/ retirée, réponse publique 404 ; redirection temporaire supprimée, seule l’URL normale reste autorisée. Configuration publique contient uniquement une clé publiable. Aucune clé secrète dans les fichiers.
 
+## F — Diffusion : terminé
+
+Textes français pour forum, version courte et mode d’emploi dans docs/DIFFUSION.md. Aucun message envoyé sur Reddit ni autre forum. Prochaine action du propriétaire : partager le lien et le texte préparé.
+
+## Portée des vérifications et entretien
+
+Validation préalable locale : MapLibre et Leaflet, 1 440 × 1 000 et 390 × 844, jeu national complet, interaction des points, recherche, code postal, géolocalisation simulée et absence de débordement. Validation publique réelle : navigateur de bureau en mode Leaflet, OAuth GitHub, publication et persistance. Le parcours public n’a pas été retesté sur un téléphone physique.
+
+Répertoire FINESS du 5 octobre 2026 : 19 917 fiches fusionnées, 19 404 positions, 513 fiches accessibles seulement par recherche. Certaines coordonnées ou certains téléphones sont incomplets ou approximatifs. Les contributions sont conservées en ligne ; le répertoire statique n’a pas de tâche quotidienne automatique activée. Entretien existant : scripts/build_directory.py. Un signalement devient « À reconfirmer » après 48 heures. Il n’existe aucun accès automatique aux stocks des pharmacies.
